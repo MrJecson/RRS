@@ -32,7 +32,22 @@ void EP20::stepSignals()
     analogSignal[PANTOGRAPH_AC2] = static_cast<float>(pantograph[PANT_AC2]->getHeight());
     analogSignal[PANTOGRAPH_DC2] = static_cast<float>(pantograph[PANT_DC2]->getHeight());
 
-    analogSignal[sigLight_Pant_fwd] = static_cast<float>(pantograph[PANT_DC1]->isUp());
+    analogSignal[sigLight_Pant_fwd] = 1;
+    analogSignal[sigLight_Pant_bwd] = 1;
+    analogSignal[sigLight_GV] = 1;
+    analogSignal[sigLight_Train_heating] = 1;
+    analogSignal[sigLight_Recap_disable] = 1;
+    analogSignal[sigLight_AutoDriver] = 1;
+    analogSignal[sigLight_SpeedControl] = 1;
+    analogSignal[sigLight_VZ] = 1;
+    analogSignal[sigLight_EPT] = 1;
+    analogSignal[sigLight_GS] = 1;
+    analogSignal[sigLight_PV] = 1;
+    analogSignal[sigLight_Whell_clean] = 1;
+    analogSignal[sigLight_Saund1] = 1;
+    analogSignal[sigLight_Brake_release] = 1;
+    analogSignal[sigLight_Test] = 1;
+    analogSignal[sigLight_Res_Purge] = 1;
 
     analogSignal[LS_G4] = 1;
     analogSignal[LS_G3] = 1;

@@ -33,5 +33,7 @@ INCLUDEPATH += ../../../simulator/vehicle/include
 INCLUDEPATH += ../../../simulator/device/include
 INCLUDEPATH += ../../../filesystem/include
 
-HEADERS += $$files(./include/*.h)
-SOURCES += $$files(./src/*.cpp)
+HEADERS += $$files(./include/*.h) \
+    include/traction-drive.h
+SOURCES += $$files(./src/*.cpp) \
+    src/traction-drive.cpp

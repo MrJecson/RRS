@@ -1,0 +1,15 @@
+<Config>
+    <Device>
+		
+        <moment_Max>9012</moment_Max>
+		
+		<power_Max>7200</power_Max>
+		
+        <omega_Nominal>135.2</omega_Nominal> 
+		
+		<reducer>4.055</reducer> 
+		
+    </Device>
+</Config>
+
+ 

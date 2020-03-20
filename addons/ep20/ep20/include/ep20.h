@@ -26,6 +26,7 @@
 #include    "ep20-signals.h"
 #include    "ep20-brake-mech.h"
 #include    "kmb2.h"
+#include    "traction-drive.h"
 
 /*!
  * \class
@@ -134,6 +135,9 @@ private:
     /// Бесконтактный контроллер машиниста
     KMB2    *kmb2;
 
+    /// Тяговый привод
+    TractionDrive   *tractionDrive;
+
     /// Инициализация
     void initialization();
 
@@ -149,6 +153,9 @@ private:
     /// Инициализация КМБ2
     void initKMB2();
 
+    /// Инициализация тягового привода
+    void initTractionDrive();
+
     /// Шаг моделирования всех систем локомотива в целом
     void step(double t, double dt);
 
@@ -163,6 +170,9 @@ private:
 
     /// Шаг моделирования бесконтактного контроллера машиниста
     void stepKMB2(double t, double dt);
+
+    /// Шаг моделирования тягового привода
+    void stepTractionDrive(double t, double dt);
 
     /// Загрузка данных из конфигурационных файлов
     void loadConfig(QString cfg_path);
