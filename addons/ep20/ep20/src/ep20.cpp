@@ -74,9 +74,12 @@ void EP20::initKMB2()
 //------------------------------------------------------------------------------
 void EP20::initTractionDrive()
 {
-    tractionDrive = new TractionDrive();
+    for (size_t i = 0; i < tractionDrive.size(); ++i)
+    {
+        tractionDrive[i] = new TractionDrive();
 
-    tractionDrive->read_custom_config(config_dir + QDir::separator() + "trac-char");
+        tractionDrive[i]->read_custom_config(config_dir + QDir::separator() + "trac-char");
+    }
 }
 
 //------------------------------------------------------------------------------
@@ -115,6 +118,8 @@ void EP20::initHighVoltageScheme()
         motorCompAC[i] = new ACMotorCompressor();
         motorCompAC[i]->read_custom_config(config_dir + QDir::separator() + "ac-motor-compressor");
     }
+
+
 }
 
 //------------------------------------------------------------------------------
@@ -439,7 +444,7 @@ void EP20::stepKMB2(double t, double dt)
 
 void EP20::stepTractionDrive(double t, double dt)
 {
-    tractionDrive
+
 }
 
 //------------------------------------------------------------------------------

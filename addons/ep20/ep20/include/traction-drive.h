@@ -5,10 +5,12 @@
 
 struct set_reverse_position {
 
+    int reverse_position;
 };
 
-struct set_thrust_force {
+struct set_traction_force {
 
+    int traction_force;
 };
 
 //------------------------------------------------------------------------------
@@ -26,7 +28,7 @@ public:
 
 
     /// Получить крутящий момент
-    double getTorque();
+    double getTorque(size_t i);
 
 private:
 
