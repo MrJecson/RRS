@@ -2,16 +2,7 @@
 #define TRACTIONDRIVE_H
 
 #include    "device.h"
-
-struct set_reverse_position {
-
-    int reverse_position;
-};
-
-struct set_traction_force {
-
-    int traction_force;
-};
+#include    "traction-drive-data.h"
 
 //------------------------------------------------------------------------------
 // Тяговый двигатель
@@ -25,12 +16,19 @@ public:
 
     ~TractionDrive();
 
+    /// Установить положение реверса
+    void setRevPos(const traction_drive_t &rev_pos);
 
+    /// Установить силу тяги
+    void setTracForce(const traction_drive_t &trac_force);
 
     /// Получить крутящий момент
     double getTorque(size_t i);
 
 private:
+
+    /// Входные данные тягового привода
+    traction_drive_t trac_drive;
 
     /// Момент максимальный
     double  moment_Max;

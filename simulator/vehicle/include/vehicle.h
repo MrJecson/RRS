@@ -28,6 +28,8 @@
 #include    "control-signals.h"
 #include    "feedback-signals.h"
 
+#include    "alsn-struct.h"
+
 #if defined(VEHICLE_LIB)
     #define VEHICLE_EXPORT  Q_DECL_EXPORT
 #else
@@ -147,6 +149,9 @@ public:
 
     QString getDebugMsg() const;
 
+    /// vehicle get sounds directory
+    QString getSoundsDir() const;
+
     /// Init vehicle brake devices
     virtual void initBrakeDevices(double p0, double pTM, double pFL);
 
@@ -159,6 +164,8 @@ public:
     double getEPTCurrent(size_t i);
 
     double getEPTControl(size_t i);
+
+    void setASLN(alsn_info_t alsn_info);
 
 public slots:
     
@@ -178,6 +185,8 @@ signals:
 
     void soundSetPitch(QString name, float pitch);
 
+    void volumeCurveStep(QString name, float param);
+
     void sendFeedBackSignals(feedback_signals_t feedback_signals);
 
 protected:
@@ -193,6 +202,8 @@ protected:
     double  payload_coeff;
     /// Full vehicle mass
     double  full_mass;
+    /// Vehicle sounds directory
+    QString soundDirectory;
 
     /// Length between coupling's axis
     double  length;
@@ -284,6 +295,9 @@ protected:
 
     /// Ток в линии управления ЭПТ
     std::vector<double> ept_current;
+
+    /// Информация АЛСН
+    alsn_info_t     alsn_info;
 
     /// User defined initialization
     virtual void initialization();

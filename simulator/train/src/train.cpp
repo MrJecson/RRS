@@ -291,6 +291,33 @@ size_t Train::getVehiclesNumber() const
     return vehicles.size();
 }
 
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+QString Train::getClientName()
+{
+    return client_name;
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+QString Train::getTrainID()
+{
+    return train_id;
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+int Train::getDirection() const
+{
+    return dir;
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
 std::vector<Vehicle *> *Train::getVehicles()
 {
     return &vehicles;
@@ -323,6 +350,16 @@ bool Train::loadTrain(QString cfg_path)
         {
             no_air = false;
         }
+
+        if (!cfg.getString("Common", "ClientName", client_name))
+        {
+            client_name = "";
+        }
+
+        if (!cfg.getString("Common", "TrainID", train_id))
+        {
+            train_id = "";
+        }        
 
         QDomNode vehicle_node = cfg.getFirstSection("Vehicle");
 
@@ -365,14 +402,11 @@ bool Train::loadTrain(QString cfg_path)
                 payload_coeff = 0;
             }
 
-            // Loading sounds            
-            soundMan->loadSounds(module_cfg_name);
-
             for (int i = 0; i < n_vehicles; i++)
             {
                 Vehicle *vehicle = loadVehicle(QString(fs.getModulesDir().c_str()) +
                                                fs.separator() +
-                                               relModulePath);                
+                                               relModulePath);
 
                 if (vehicle == Q_NULLPTR)
                 {
@@ -407,10 +441,14 @@ bool Train::loadTrain(QString cfg_path)
                 vehicle->setIndex(index);
                 index = ode_order;
 
+                // Loading sounds
+                soundMan->loadSounds(vehicle->getSoundsDir());
+
                 connect(vehicle, &Vehicle::soundPlay, soundMan, &SoundManager::play, Qt::DirectConnection);
                 connect(vehicle, &Vehicle::soundStop, soundMan, &SoundManager::stop, Qt::DirectConnection);
                 connect(vehicle, &Vehicle::soundSetVolume, soundMan, &SoundManager::setVolume, Qt::DirectConnection);
                 connect(vehicle, &Vehicle::soundSetPitch, soundMan, &SoundManager::setPitch, Qt::DirectConnection);
+                connect(vehicle, &Vehicle::volumeCurveStep, soundMan, &SoundManager::volumeCurveStep, Qt::DirectConnection);
 
                 if (vehicles.size() !=0)
                 {
@@ -517,7 +555,7 @@ void Train::setInitConditions(const init_data_t &init_data)
         }
     }
 
-    double x0 = init_data.init_coord * 1000.0;
+    double x0 = init_data.init_coord * 1000.0 - dir * this->getFirstVehicle()->getLength() / 2.0;
     y[0] = x0;    
 
     Journal::instance()->info(QString("Vehicle[%2] coordinate: %1").arg(y[0]).arg(0, 3));

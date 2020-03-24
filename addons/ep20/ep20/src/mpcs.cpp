@@ -4,6 +4,7 @@
 #include "mpcs.h"
 #include "current-kind.h"
 
+#include "ep20-signals.h"
 
 //------------------------------------------------------------------------------
 // Конструктор
@@ -41,6 +42,7 @@ void MPCS::init()
 {
     taskPant = new TaskPant();
 
+    taskPant->setStoragePath(pathStorage);
     taskPant->init();
 
     auxConv = new AuxiliaryConverter();  
@@ -80,6 +82,26 @@ float MPCS::getKeyPosition()
 //------------------------------------------------------------------------------
 void MPCS::stepKeysControl(double t, double dt)
 {
+    Q_UNUSED(t)
+    Q_UNUSED(dt)
+
+    if (getKeyState(KEY_J))
+    {
+        if (isShift())
+        {
+           keyPosition = 1;
+           buttonsOn();
+        }
+        else
+        {
+           keyPosition = 0;
+           buttonsOff();
+        }
+    }
+
+    if (keyPosition == 0)
+        return;
+
     if (getKeyState(KEY_I))
     {
         if (isShift())
@@ -113,17 +135,6 @@ void MPCS::stepKeysControl(double t, double dt)
     }
 
 
-    if (getKeyState(KEY_J))
-    {
-        if (isShift())
-        {
-           keyPosition = 1;
-        }
-        else
-        {
-           keyPosition = 0;
-        }
-    }
 }
 
 //------------------------------------------------------------------------------
@@ -192,6 +203,9 @@ void MPCS::stepToggleSwitchMK(double t, double dt)
     mkStartTimer.step(t, dt);
 }
 
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
 void MPCS::PressureReg()
 {
     double dp = mpcs_input.PressMR - p_prev;
@@ -236,6 +250,38 @@ void MPCS::ode_system(const state_vector_t &Y, state_vector_t &dYdt, double t)
 void MPCS::load_config(CfgReader &cfg)
 {
     Q_UNUSED(cfg)
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+void MPCS::buttonsOn()
+{
+    mpcs_output.lamps_state.pant_fwd = SIG_LIGHT_YELLOW;
+    mpcs_output.lamps_state.pant_bwd = SIG_LIGHT_YELLOW;
+    mpcs_output.lamps_state.gv = SIG_LIGHT_YELLOW;
+    mpcs_output.lamps_state.train_heating = SIG_LIGHT_YELLOW;
+    mpcs_output.lamps_state.recup_disable = SIG_LIGHT_YELLOW;
+    mpcs_output.lamps_state.auto_driver = SIG_LIGHT_YELLOW;
+    mpcs_output.lamps_state.speed_control = SIG_LIGHT_YELLOW;
+    mpcs_output.lamps_state.vz = SIG_LIGHT_YELLOW;
+
+    mpcs_output.lamps_state.ept = SIG_LIGHT_YELLOW;
+    mpcs_output.lamps_state.gs = SIG_LIGHT_YELLOW;
+    mpcs_output.lamps_state.pv = SIG_LIGHT_YELLOW;
+    mpcs_output.lamps_state.wheel_clean = SIG_LIGHT_YELLOW;
+    mpcs_output.lamps_state.saund1 = SIG_LIGHT_YELLOW;
+    mpcs_output.lamps_state.brake_release = SIG_LIGHT_YELLOW;
+    mpcs_output.lamps_state.test = SIG_LIGHT_YELLOW;
+    mpcs_output.lamps_state.res_purge = SIG_LIGHT_YELLOW;
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+void MPCS::buttonsOff()
+{
+    mpcs_output.lamps_state = lamps_state_t();
 }
 
 //------------------------------------------------------------------------------

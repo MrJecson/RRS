@@ -5,6 +5,8 @@
 #include    "mpcs-task-pant.h"
 #include    "current-kind.h"
 
+#include    "ep20-signals.h"
+
 //------------------------------------------------------------------------------
 // Конструктор
 //------------------------------------------------------------------------------
@@ -46,6 +48,11 @@ void TaskPant::setControlSignal(size_t id, bool value)
     ctrl_signals[id] = value;
 }
 
+void TaskPant::setStoragePath(QString path)
+{
+    pathStorage = path;
+}
+
 //------------------------------------------------------------------------------
 // Чтение из файла значения последнего активного рода тока
 //------------------------------------------------------------------------------
@@ -68,13 +75,13 @@ void TaskPant::readLastCurrentKind()
 //------------------------------------------------------------------------------
 // Записать значение рода тока в файл
 //------------------------------------------------------------------------------
-void TaskPant::writeLastCurrentKind()
+void TaskPant::writeLastCurrentKind(mpcs_input_t mpcs_input)
 {
     std::ofstream file(pathStorage.toStdString() + "last_current_kind");
 
     if (file.is_open())
     {
-        file << last_current_kind;
+        file << mpcs_input.current_kind;
         file.close();
     }
     else
@@ -148,6 +155,11 @@ bool isEven(int num)
     return ( (num % 2) == 0);
 }
 
+void setPantLampsState(mpcs_output_t &mpcs_output, unsigned long pantPriority, float state)
+{
+    pantPriority == 1 ? mpcs_output.lamps_state.pant_fwd = state : mpcs_output.lamps_state.pant_bwd = state;
+}
+
 //------------------------------------------------------------------------------
 // Обработка поднятие ТП
 //------------------------------------------------------------------------------
@@ -162,6 +174,7 @@ void TaskPant::pantUp(const mpcs_input_t &mpcs_input, mpcs_output_t &mpcs_output
             if (is_command_up)
             {
                 taskPantStateUp = UP_PRIORETY_PANT;
+                setPantLampsState(mpcs_output, pantPriority, SIG_LIGHT_RED);
             }
 
             break;
@@ -266,13 +279,16 @@ void TaskPant::pantUp(const mpcs_input_t &mpcs_input, mpcs_output_t &mpcs_output
         }
         case  READY:
         {
-            writeLastCurrentKind();
+            writeLastCurrentKind(mpcs_input);
             taskPantStateUp = INITIAL_STATE_IS_UP;
+
+            setPantLampsState(mpcs_output, pantPriority, SIG_LIGHT_GREEN);
+
             break;
         }
         case  FAULT_IS_UP:
         {
-            taskPantStateUp = INITIAL_STATE_IS_UP;
+            taskPantStateUp = READY;
             break;
         }
         default:
@@ -294,6 +310,7 @@ void TaskPant::pantDown(const mpcs_input_t &mpcs_input, mpcs_output_t &mpcs_outp
            if (is_command_down)
            {
                taskPantStateDown = IS_OFF_MS_HSS;
+               setPantLampsState(mpcs_output, pantPriority, SIG_LIGHT_RED);
            }
 
            break;
@@ -355,6 +372,7 @@ void TaskPant::pantDown(const mpcs_input_t &mpcs_input, mpcs_output_t &mpcs_outp
             {
                 pantDownWaitingTimer->stop();
                 taskPantStateDown = INITIAL_STATE_IS_DOWN;
+                setPantLampsState(mpcs_output, pantPriority, SIG_LIGHT_YELLOW);
             }
 
             break;

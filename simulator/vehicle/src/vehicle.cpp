@@ -477,12 +477,18 @@ void Vehicle::setCurrentKind(int value)
     current_kind = value;
 }
 
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
 void Vehicle::setEPTControl(size_t i, double value)
 {
     if (i < ept_control.size())
         ept_control[i] = value;
 }
 
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
 double Vehicle::getEPTCurrent(size_t i)
 {
     if (i < ept_current.size())
@@ -491,12 +497,23 @@ double Vehicle::getEPTCurrent(size_t i)
     return 0;
 }
 
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
 double Vehicle::getEPTControl(size_t i)
 {
     if (i < ept_control.size())
         return ept_control[i];
 
     return 0;
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+void Vehicle::setASLN(alsn_info_t alsn_info)
+{
+    this->alsn_info = alsn_info;
 }
 
 //------------------------------------------------------------------------------
@@ -556,11 +573,14 @@ void Vehicle::loadConfiguration(QString cfg_path)
         cfg.getDouble(secName, "PayloadMass", payload_mass);
         cfg.getDouble(secName, "Length", length);
         cfg.getDouble(secName, "WheelDiameter", wheel_diameter);
+        cfg.getString(secName, "SoundDir", soundDirectory);
+
 
         Journal::instance()->info(QString("EmptyMass: %1 kg").arg(empty_mass));
         Journal::instance()->info(QString("PayloadMass: %1 kg").arg(payload_mass));
         Journal::instance()->info(QString("Length: %1 m").arg(length));
         Journal::instance()->info(QString("WheelDiameter: %1 m").arg(wheel_diameter));
+        Journal::instance()->info(QString("SoundsDirectory: " + soundDirectory));
 
         rk = wheel_diameter / 2.0;
 
@@ -743,4 +763,12 @@ void Vehicle::initBrakeDevices(double p0, double pTM, double pFL)
     Q_UNUSED(p0)
     Q_UNUSED(pTM)
     Q_UNUSED(pFL)
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+QString Vehicle::getSoundsDir() const
+{
+    return soundDirectory;
 }
