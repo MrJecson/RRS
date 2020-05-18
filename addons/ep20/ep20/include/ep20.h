@@ -139,6 +139,9 @@ private:
     /// Тяговый привод
     std::array<TractionDrive *, NUM_TRACTION_DRIVE> tractionDrive;
 
+    /// Экземпляр данных тягового привода
+    traction_drive_t trac_drive_data;
+
     /// Инициализация
     void initialization();
 

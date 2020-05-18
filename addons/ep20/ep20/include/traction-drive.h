@@ -16,11 +16,11 @@ public:
 
     ~TractionDrive();
 
-    /// Установить положение реверса
-    void setRevPos(const traction_drive_t &rev_pos);
+    /// Установить угловую скорость
+    void setWheelOmega(double omega);
 
-    /// Установить силу тяги
-    void setTracForce(const traction_drive_t &trac_force);
+    /// Установить данные для тягового привода
+    void setTractionDriveData(const traction_drive_t &trac_drive);
 
     /// Получить крутящий момент
     double getTorque(size_t i);
@@ -30,17 +30,28 @@ private:
     /// Входные данные тягового привода
     traction_drive_t trac_drive;
 
-    /// Момент максимальный
-    double  moment_Max;
 
-    /// Мощность максимальная
-    double  power_Max;
+    /// Момент максимальный (тяговая характеристика)
+    double  trac_moment_Max;
+    /// Мощность максимальная (тяговая характеристика)
+    double  trac_power_Max;
+    /// Омега номинальная (тяговая характеристика)
+    double  trac_omega_Nominal;
+    /// Редуктор (тяговая характеристика)
+    double  reducer_coeff;
 
-    /// Омега номинальная
-    double  omega_Nominal;
 
-    /// Редуктор
-    double  reducer;
+    /// Момент максимальный (рекуперативная характеристика)
+    double recup_moment_Max;
+    /// Мощность максимальная (рекуперативная характеристика)
+    double recup_power_Max;
+    /// Омега номинальная (рекуперативная характеристика)
+    double recup_omega_Nominal;
+
+
+
+    /// Угловая скорость
+    double wheel_omega;
 
     /// Массив крутящих моментов
     std::array<double, 2> torque;
@@ -53,6 +64,8 @@ private:
 
     /// Загрузка конфига
     void load_config(CfgReader &cfg);
+
+    double getTracTorqueLimit(double omega);
 };
 
 #endif // TRACTIONDRIVE_H
