@@ -52,6 +52,8 @@ void TractionDrive::preStep(state_vector_t &Y, double t)
     double M_trac_ref = hs_p(trac_drive.traction_force) * getTracTorqueLimit(wheel_omega * reducer_coeff);
 
     double M_edt_ref = 0;
+
+    double F_brakes_ref = hs_p(trac_drive.traction_force) * getBrakingForceLimit(wheel_omega * reducer_coeff);
 }
 
 //------------------------------------------------------------------------------
@@ -91,3 +93,14 @@ double TractionDrive::getTracTorqueLimit(double omega)
     }
 }
 
+double TractionDrive::getBrakingForceLimit(double omega_recup)
+{
+    double omg_recup = qAbs(omega_recup);
+
+    if (omg_recup <= recup_omega_Nominal)
+        return recup_moment_Max;
+    else
+    {
+        return recup_power_Max * sign(omg_recup);
+    }
+}

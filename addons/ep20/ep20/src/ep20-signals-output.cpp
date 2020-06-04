@@ -52,14 +52,17 @@ void EP20::stepSignals()
     analogSignal[sigLight_Test] = mpcsOutput.lamps_state.test.state;
     analogSignal[sigLight_Res_Purge] = mpcsOutput.lamps_state.res_purge.state;
 
-    analogSignal[LS_G4] = 1;
+    analogSignal[LS_G4] = 0;
     analogSignal[LS_G3] = 0;
     analogSignal[LS_G2] = 0;
-    analogSignal[LS_G1] = 0;
-    analogSignal[LS_Y] = 1;
+    analogSignal[LS_G1] = 1;
+    analogSignal[LS_Y] = 0;
     analogSignal[LS_RY] = 0;
     analogSignal[LS_R] = 0;
     analogSignal[LS_W] = 0;
+
+    analogSignal[CU] = mpcsOutput.control_switch;
+    analogSignal[EPK] = 0;
 
     analogSignal[WHEEL_1] = static_cast<float>(dir * wheel_rotation_angle[0] / 2.0 / Physics::PI);
     analogSignal[WHEEL_2] = static_cast<float>(dir * wheel_rotation_angle[1] / 2.0 / Physics::PI);
@@ -67,5 +70,4 @@ void EP20::stepSignals()
     analogSignal[WHEEL_4] = static_cast<float>(dir * wheel_rotation_angle[3] / 2.0 / Physics::PI);
     analogSignal[WHEEL_5] = static_cast<float>(dir * wheel_rotation_angle[4] / 2.0 / Physics::PI);
     analogSignal[WHEEL_6] = static_cast<float>(dir * wheel_rotation_angle[5] / 2.0 / Physics::PI);
-
 }

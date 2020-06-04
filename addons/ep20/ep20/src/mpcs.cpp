@@ -17,7 +17,7 @@ MPCS::MPCS(QObject *parent) : Device(parent)
 
     p_max = 0.9;
 
-    std:fill(mk_start.begin(), mk_start.end(), 0);
+    std::fill(mk_start.begin(), mk_start.end(), 0.0);
 
     mkStartTimer.setTimeout(1.0);
     connect(&mkStartTimer, &Timer::process, this, &MPCS::slotMKStart);
@@ -29,6 +29,10 @@ MPCS::MPCS(QObject *parent) : Device(parent)
     mk_count = 0;
 
     keyPosition = 0;
+    controlSwitch = 0;
+
+    taskPant = nullptr;
+    auxConv = nullptr;
 }
 
 //------------------------------------------------------------------------------
@@ -93,20 +97,32 @@ void MPCS::stepKeysControl(double t, double dt)
     {
         if (isShift())
         {
-           keyPosition = 1;
-           buttonsOn();
+            controlSwitch = 1;
+            buttonsOn();
         }
         else
         {
-           keyPosition = 0;
-           buttonsOff();
+            controlSwitch = 0;
+            buttonsOff();
         }
     }
 
-    if (keyPosition == 0)
+    if (getKeyState(KEY_U))
+    {
+        if (isShift())
+        {
+           keyPosition = 1;           
+        }
+        else
+        {
+           keyPosition = 0;           
+        }
+    }
+
+    if ( (keyPosition == 0) || (controlSwitch == 0) )
         return;
 
-    if (getKeyState(KEY_I))
+    if (getKeyState(KEY_O))
     {
         if (isShift())
         {
@@ -118,7 +134,7 @@ void MPCS::stepKeysControl(double t, double dt)
         }
     }
 
-    if (getKeyState(KEY_U))
+    if (getKeyState(KEY_I))
     {
         if (isShift())
         {
@@ -146,7 +162,9 @@ void MPCS::stepKeysControl(double t, double dt)
 //------------------------------------------------------------------------------
 void MPCS::stepDiscrete(double t, double dt)
 {   
-    if (keyPosition == 0)
+    mpcs_output.control_switch = static_cast<float>(controlSwitch);
+
+    if ( (keyPosition == 0) || (controlSwitch == 0) )
         return;
 
     taskPant->step(y, t, dt, mpcs_input, mpcs_output);

@@ -30,7 +30,6 @@ private:
     /// Входные данные тягового привода
     traction_drive_t trac_drive;
 
-
     /// Момент максимальный (тяговая характеристика)
     double  trac_moment_Max;
     /// Мощность максимальная (тяговая характеристика)
@@ -40,15 +39,12 @@ private:
     /// Редуктор (тяговая характеристика)
     double  reducer_coeff;
 
-
     /// Момент максимальный (рекуперативная характеристика)
     double recup_moment_Max;
     /// Мощность максимальная (рекуперативная характеристика)
     double recup_power_Max;
     /// Омега номинальная (рекуперативная характеристика)
     double recup_omega_Nominal;
-
-
 
     /// Угловая скорость
     double wheel_omega;
@@ -65,7 +61,11 @@ private:
     /// Загрузка конфига
     void load_config(CfgReader &cfg);
 
+    /// Вычисление максимального тягового момента
     double getTracTorqueLimit(double omega);
+
+    /// Вычисление максимального тормозного усилия
+    double getBrakingForceLimit(double omega_recup);
 };
 
 #endif // TRACTIONDRIVE_H

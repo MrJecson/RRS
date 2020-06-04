@@ -95,7 +95,7 @@ void Km21KR2::stepKeysControl(double t, double dt)
     Q_UNUSED(t)
     Q_UNUSED(dt)
 
-    if (!reverseIsPressedOneTime)
+    if (!reverseIsPressedOneTime && (TO_INT(mainShaftPos) == 0) && (TO_INT(fieldWeakShaft) == 0))
         reverseState += ((getKeyState(KEY_W) && reverseState != 1) -
                          (getKeyState(KEY_S) && reverseState != -1));
 
@@ -110,11 +110,6 @@ void Km21KR2::stepKeysControl(double t, double dt)
     // Авт. сброс
     if (getKeyState(KEY_D))
     {
-        if (isControl())
-        {
-            autoReset = false;
-        }
-
         if (!autoReset && isShift() && fieldWeakShaft != 0 && lastControllerPositionIsZero && is_dec)
         {
             fieldWeakShaft -= 2;
@@ -123,11 +118,13 @@ void Km21KR2::stepKeysControl(double t, double dt)
     }
     else
     {
+        //if (TO_INT(fieldWeakShaft) == 0)
         is_dec = true;
     }
 
     if (autoReset)
     {
+        autoReset = !getKeyState(KEY_A);
         return;
     }
 
@@ -167,7 +164,9 @@ void Km21KR2::stepKeysControl(double t, double dt)
                    (-5 * getKeyState(KEY_D) +
                      2 * getKeyState(KEY_A));
 
-    lastControllerPositionIsZero = (mainShaftPos == 0);
+    mainShaftPos = mainShaftPos * TO_INT(hs_n(mainShaftHeight - 0.99));
+
+    lastControllerPositionIsZero = (TO_INT(mainShaftPos) == 0);
 }
 
 //------------------------------------------------------------------------------
