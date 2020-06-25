@@ -21,7 +21,7 @@ struct traction_drive_t {
     int reverse_position;
 
     /// Сила тяги
-    int traction_force;
+    double traction_force;
 };
 
 #endif // TRACTIONDRIVEDATA_H

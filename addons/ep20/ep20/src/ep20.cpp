@@ -242,6 +242,12 @@ void EP20::step(double t, double dt)
                 .arg(trac_drive_data.reverse_position, 2)
                 .arg(trac_drive_data.traction_force);
 
+        DebugMsg = QString("t: %1 s, Q_a[1]: %2, Q_a[2]: %3, Trac_force: %4")
+                .arg(t, 10, 'f', 2)
+                .arg(Q_a[1], 4, 'f', 2)
+                .arg(Q_a[2], 4, 'f', 2)
+                .arg(trac_drive_data.traction_force);
+
 
         stepSignals();
 }
@@ -458,8 +464,6 @@ void EP20::stepTractionDrive(double t, double dt)
     trac_drive_data.reverse_position = kmb2->getReverseState();
     trac_drive_data.traction_force = kmb2->getTractionLevel();
 
-    wheel_omega;
-
 
     for (size_t i = 0; i < tractionDrive.size(); ++i)
     {
@@ -469,6 +473,14 @@ void EP20::stepTractionDrive(double t, double dt)
         tractionDrive[i]->step(t, dt);
     }
 
+    Q_a[1] = tractionDrive[0]->getTorque(0);
+    Q_a[2] = tractionDrive[0]->getTorque(1);
+
+    Q_a[3] = tractionDrive[1]->getTorque(0);
+    Q_a[4] = tractionDrive[1]->getTorque(1);
+
+    Q_a[5] = tractionDrive[2]->getTorque(0);
+    Q_a[6] = tractionDrive[2]->getTorque(1);
 }
 
 //------------------------------------------------------------------------------

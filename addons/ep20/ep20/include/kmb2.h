@@ -31,7 +31,7 @@ public:
     double getVelocityLevel();
 
     // Получить реверсивное состояние
-    float getReverseState();
+    int getReverseState();
 
     // Получить состояние разварота Ключ-карты для анимации
     double getTurn();
