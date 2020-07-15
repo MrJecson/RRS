@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Config>
+
+	<!-- треугольник текущего ограничения скорости -->
+	<STriangleLimit_cur>
+		<widthTriangle>6.0</widthTriangle>
+		<lengthTriangle>20.0</lengthTriangle>
+		<colorTriangle>#ff0000</colorTriangle>
+	</STriangleLimit_cur>
+	
+	<!-- треугольник следующего ограничения скорости -->
+	<STriangleLimit_next>
+		<widthTriangle>7.5</widthTriangle>
+		<lengthTriangle>25.0</lengthTriangle>
+		<colorTriangle>#ffff00</colorTriangle>
+	</STriangleLimit_next>
+	
+	<!-- треугольник заданной скорости -->
+	<STriangleSetpointSpeed>
+		<widthTriangle>6.5</widthTriangle>
+		<lengthTriangle>28.0</lengthTriangle>
+		<colorTriangle>#0000ff</colorTriangle>
+	</STriangleSetpointSpeed>
+
+	
+</Config>

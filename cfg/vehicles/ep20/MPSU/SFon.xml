@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Config>
+	<SFon>
+		<!-- ================================== -->
+		<!--		дуга шкалы					-->
+		<!-- ================================== -->
+		<!-- цвет -->
+		<arcScale_color>#ffffff</arcScale_color>
+		<!-- ширина -->
+		<arcScale_width>2</arcScale_width>
+
+
+		<!-- ================================== -->
+		<!--		центральный круг			-->
+		<!-- ================================== -->
+		<!-- цвет -->
+		<centralCircle_color>#00ff00</centralCircle_color>
+		<!-- диаметр -->
+		<centralCircle_diameter>50</centralCircle_diameter>
+
+
+		<!-- ================================== -->
+		<!--		скоростя вокруг дуги шкалы	-->
+		<!-- ================================== -->
+		<!-- цвет -->
+		<speeds_color>#ffffff</speeds_color>
+		<!-- размер шрифта -->
+		<speeds_fontSize>16</speeds_fontSize>
+		<!-- отступ от дуги шкалы -->
+		<speeds_margin>48</speeds_margin>
+		<!-- довесок к радиусу по оси OX -->
+		<speeds_radius_dx>0</speeds_radius_dx>
+		<!-- довесок к радиусу по оси OY -->
+		<speeds_radius_dy>10</speeds_radius_dy>
+		
+	</SFon>
+	
+</Config>
