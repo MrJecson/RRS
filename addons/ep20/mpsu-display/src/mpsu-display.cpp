@@ -91,7 +91,36 @@ void MpsuDisplay::slotUpdateTimer()
     display_data_t all_data;
 
     all_data.screen_main.sCurSpeed = static_cast<double>(input_signals[MPSU_CURRENT_SPEED]);
+    all_data.screen_main.sCurSpeedLimit = static_cast<int>(input_signals[MPSU_CURRENT_SPEED_LIMIT]);
+    all_data.screen_main.sNextSpeedLimit = static_cast<int>(input_signals[MPSU_NEXT_SPEED_LIMIT]);
+
     all_data.screen_main.pressureTM = static_cast<double>(input_signals[MPSU_TM]);
+    all_data.screen_main.pressureUR = static_cast<double>(input_signals[MPSU_UR]);
+    //all_data.screen_main.pressurePM;
+    all_data.screen_main.pressureTC = static_cast<double>(input_signals[MPSU_TC]);
+    //all_data.screen_main.pressureVR;
+    //all_data.screen_main.pressureAST;
+    all_data.screen_main.TC1;
+    all_data.screen_main.TC2;
+    all_data.screen_main.TC3;
+    all_data.screen_main.I;
+    all_data.screen_main.U;
+    all_data.screen_main.P;
+    all_data.screen_main.ltct;
+    all_data.screen_main.forces;
+    all_data.screen_main.outputI;
+    all_data.screen_main.outputU;
+    all_data.screen_main.numSwitch;
+    all_data.screen_main.refForces;
+    all_data.screen_main.sTrainPos;
+    all_data.screen_main.reversorDir;
+    all_data.screen_main.controlVoltage;
+    all_data.screen_main.sSetpointSpeed;
+    all_data.screen_main.motorCompressor1;
+    all_data.screen_main.motorCompressor2;
+    all_data.screen_main.scaleSetTraction;
+    all_data.screen_main.scaleActualTraction;
+
 
     middleBlock_->setAllData(all_data);
 }

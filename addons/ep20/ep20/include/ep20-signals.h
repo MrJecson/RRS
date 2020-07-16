@@ -78,7 +78,35 @@ enum
     WHEEL_6 = 199,
 
     MPSU_CURRENT_SPEED = 200,
-    MPSU_TM = 201
+    MPSU_CURRENT_SPEED_LIMIT = 201,
+    MPSU_NEXT_SPEED_LIMIT = 202,
+
+    MPSU_TM = 203,
+    MPSU_UR = 204,
+    MPSU_PM = 205,
+    MPSU_TC = 206,
+    MPSU_VR = 207,
+    MPSU_AST = 208,
+    MPSU_TC1 = 209,
+    MPSU_TC2 = 210,
+    MPSU_TC3 = 211,
+    MPSU_I = 212,
+    MPSU_U = 213,
+    MPSU_P = 214,
+    MPSU_ltct = 215,
+    MPSU_forces = 216,
+    MPSU_outputI = 217,
+    MPSU_outputU = 218,
+    MPSU_numSwitch = 219,
+    MPSU_refForces = 220,
+    MPSU_sTrinPos = 221,
+    MPSU_reversorDir = 222,
+    MPSU_controlVoltage = 223,
+    MPSU_sSeptoinSpeed = 224,
+    MPSU_motorCompressor1 = 225,
+    MPSU_motorCompressor2 = 226,
+    MPSU_scaleSetTraction = 227,
+    MPSU_scaleActualTraction =228
 };
 
 enum

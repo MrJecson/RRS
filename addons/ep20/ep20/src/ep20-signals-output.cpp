@@ -72,6 +72,35 @@ void EP20::stepSignals()
     analogSignal[WHEEL_6] = static_cast<float>(dir * wheel_rotation_angle[5] / 2.0 / Physics::PI);
 
     analogSignal[MPSU_CURRENT_SPEED] = analogSignal[BLOK_VELOCITY];
+    analogSignal[MPSU_CURRENT_SPEED_LIMIT] = analogSignal[BLOK_VELOCITY_CURRENT_LIMIT];
+    analogSignal[MPSU_NEXT_SPEED_LIMIT] = analogSignal [BLOK_VELOCITY_NEXT_LIMIT];
+
     analogSignal[MPSU_TM] = analogSignal[BLOK_TM_PRESS];
+    analogSignal[MPSU_UR] = analogSignal[BLOK_UR_PRESS];
+    //analogSignal[MPSU_PM];
+    analogSignal[MPSU_TC] = analogSignal[BLOK_TC_PRESS];
+    //analogSignal[MPSU_VR];
+    //analogSignal[MPSU_AST];
+    //analogSignal[MPSU_TC1];
+    //analogSignal[MPSU_TC2];
+    //analogSignal[MPSU_TC3];
+    //analogSignal[MPSU_I];
+    //analogSignal[MPSU_U];
+    //analogSignal[MPSU_P];
+    //analogSignal[MPSU_ltct];
+    //analogSignal[MPSU_forces];
+    //analogSignal[MPSU_outputI];
+    //analogSignal[MPSU_outputU];
+    //analogSignal[MPSU_numSwitch];
+    //analogSignal[MPSU_refForces];
+    //analogSignal[MPSU_sTrinPos];
+    //analogSignal[MPSU_reversorDir];
+    //analogSignal[MPSU_controlVoltage];
+    //analogSignal[MPSU_sSeptoinSpeed];
+//    analogSignal[MPSU_motorCompressor1];
+//    analogSignal[MPSU_motorCompressor2];
+    //analogSignal[MPSU_scaleSetTraction];
+    //analogSignal[MPSU_scaleActualTraction];
+
 
 }
