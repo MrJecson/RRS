@@ -1,5 +1,7 @@
 #include    "mpsu-display.h"
 
+#include    "ep20-signals.h"
+
 #include    "CfgReader.h"
 #include    <QVBoxLayout>
 
@@ -86,7 +88,12 @@ void MpsuDisplay::initTopBlock()
 
 void MpsuDisplay::slotUpdateTimer()
 {
+    display_data_t all_data;
 
+    all_data.screen_main.sCurSpeed = static_cast<double>(input_signals[MPSU_CURRENT_SPEED]);
+    all_data.screen_main.pressureTM = static_cast<double>(input_signals[MPSU_TM]);
+
+    middleBlock_->setAllData(all_data);
 }
 
 GET_DISPLAY(MpsuDisplay)

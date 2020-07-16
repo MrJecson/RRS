@@ -13,7 +13,7 @@
  *  \date 03/03/2017
  */
 #include "middle-block.h"
-#include "display-shared-structures.h"
+//#include "display-shared-structures.h"
 #include "structures-display.h"
 #include "CfgReader.h"
 
@@ -373,6 +373,32 @@ bool MiddleBlock::getResetManometerTMPM()
 bool MiddleBlock::getResetManometerTC12()
 {
     return scrnDiagnostic_->getResetManometerTC12();
+}
+
+//-----------------------------------------------------------------------------
+//
+//-----------------------------------------------------------------------------
+void MiddleBlock::setAllData(display_data_t &all_data)
+{
+    AbstractScreen::setPowerType(all_data.powerType);
+
+    statusBarBlock_->updateStatusBar(&all_data.status_bar);
+
+    //conditionLineBlock_->updateLine(&all_data.condition_line);
+
+    // -------------------------------------------------------
+
+    scrnMain_->updateScreen(&all_data.screen_main);
+
+    scrnDiagnostics_->updateScreen(&all_data.screen_diagnostics);
+
+    scrnPowerCircuit_->updateScreen(&all_data.screen_power_circuit);
+
+    scrnPneumatics_->updateScreen(&all_data.screen_pneumatics);
+
+    scrnDiagnostic_->updateScreen(&all_data.diagnostic);
+
+    scrnLog_->updateScreen(Q_NULLPTR);
 }
 
 

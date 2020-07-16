@@ -71,4 +71,7 @@ void EP20::stepSignals()
     analogSignal[WHEEL_5] = static_cast<float>(dir * wheel_rotation_angle[4] / 2.0 / Physics::PI);
     analogSignal[WHEEL_6] = static_cast<float>(dir * wheel_rotation_angle[5] / 2.0 / Physics::PI);
 
+    analogSignal[MPSU_CURRENT_SPEED] = analogSignal[BLOK_VELOCITY];
+    analogSignal[MPSU_TM] = analogSignal[BLOK_TM_PRESS];
+
 }

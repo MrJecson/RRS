@@ -75,7 +75,10 @@ enum
     WHEEL_3 = 196,
     WHEEL_4 = 197,
     WHEEL_5 = 198,
-    WHEEL_6 = 199
+    WHEEL_6 = 199,
+
+    MPSU_CURRENT_SPEED = 200,
+    MPSU_TM = 201
 };
 
 enum

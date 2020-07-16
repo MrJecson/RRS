@@ -39,6 +39,7 @@ class ScreenPneumatics;
 class ScreenDiagnostic;
 class ScreenLog;
 
+#include "display-shared-structures.h"
 
 /*!
  * \class MiddleBlock
@@ -64,7 +65,7 @@ public:
     bool getResetManometerTC12();
 
 
-
+    void setAllData(display_data_t &allData);
 
 public slots:
     /// Принимаем данные из главного окна
