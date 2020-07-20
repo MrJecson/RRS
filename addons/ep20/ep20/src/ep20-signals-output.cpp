@@ -77,28 +77,28 @@ void EP20::stepSignals()
 
     analogSignal[MPSU_TM] = analogSignal[BLOK_TM_PRESS];
     analogSignal[MPSU_UR] = analogSignal[BLOK_UR_PRESS];
-    //analogSignal[MPSU_PM];
+    analogSignal[MPSU_PM] = static_cast<float>(main_reservoir->getPressure());
     analogSignal[MPSU_TC] = analogSignal[BLOK_TC_PRESS];
-    //analogSignal[MPSU_VR];
+    analogSignal[MPSU_VR] = static_cast<float>(spareReservoir->getPressure());
     //analogSignal[MPSU_AST];
-    //analogSignal[MPSU_TC1];
-    //analogSignal[MPSU_TC2];
-    //analogSignal[MPSU_TC3];
+    analogSignal[MPSU_TC1] = static_cast<float>(brake_mech[FWD_TROLLEY]->getBrakeCylinderPressure());
+    analogSignal[MPSU_TC2] = static_cast<float>(brake_mech[MDL_TROLLEY]->getBrakeCylinderPressure());
+    analogSignal[MPSU_TC3] = static_cast<float>(brake_mech[BWD_TROLLEY]->getBrakeCylinderPressure());
     //analogSignal[MPSU_I];
-    //analogSignal[MPSU_U];
+    analogSignal[MPSU_U] = static_cast<float>(Ukr_in / 1000.0);
     //analogSignal[MPSU_P];
-    //analogSignal[MPSU_ltct];
+    //analogSignal[MPSU_ltct] = ;
     //analogSignal[MPSU_forces];
     //analogSignal[MPSU_outputI];
     //analogSignal[MPSU_outputU];
     //analogSignal[MPSU_numSwitch];
-    //analogSignal[MPSU_refForces];
+    analogSignal[MPSU_refForces] = static_cast<float>(kmb2->getTractionLevel() * 100);
     //analogSignal[MPSU_sTrinPos];
     //analogSignal[MPSU_reversorDir];
     //analogSignal[MPSU_controlVoltage];
     //analogSignal[MPSU_sSeptoinSpeed];
-//    analogSignal[MPSU_motorCompressor1];
-//    analogSignal[MPSU_motorCompressor2];
+    analogSignal[MPSU_motorCompressor1] = mpcsOutput.toggleSwitchMK[0] ? 1 : 2;
+    analogSignal[MPSU_motorCompressor2] = mpcsOutput.toggleSwitchMK[1] ? 1 : 2;
     //analogSignal[MPSU_scaleSetTraction];
     //analogSignal[MPSU_scaleActualTraction];
 

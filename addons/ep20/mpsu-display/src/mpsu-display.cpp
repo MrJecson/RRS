@@ -96,30 +96,35 @@ void MpsuDisplay::slotUpdateTimer()
 
     all_data.screen_main.pressureTM = static_cast<double>(input_signals[MPSU_TM]);
     all_data.screen_main.pressureUR = static_cast<double>(input_signals[MPSU_UR]);
-    //all_data.screen_main.pressurePM;
+    all_data.screen_main.pressurePM = static_cast<double>(input_signals[MPSU_PM]);
     all_data.screen_main.pressureTC = static_cast<double>(input_signals[MPSU_TC]);
-    //all_data.screen_main.pressureVR;
+    all_data.screen_main.pressureVR = static_cast<double>(input_signals[MPSU_VR]);
     //all_data.screen_main.pressureAST;
-    all_data.screen_main.TC1;
-    all_data.screen_main.TC2;
-    all_data.screen_main.TC3;
-    all_data.screen_main.I;
-    all_data.screen_main.U;
-    all_data.screen_main.P;
-    all_data.screen_main.ltct;
-    all_data.screen_main.forces;
-    all_data.screen_main.outputI;
-    all_data.screen_main.outputU;
-    all_data.screen_main.numSwitch;
-    all_data.screen_main.refForces;
-    all_data.screen_main.sTrainPos;
-    all_data.screen_main.reversorDir;
-    all_data.screen_main.controlVoltage;
-    all_data.screen_main.sSetpointSpeed;
-    all_data.screen_main.motorCompressor1;
-    all_data.screen_main.motorCompressor2;
-    all_data.screen_main.scaleSetTraction;
-    all_data.screen_main.scaleActualTraction;
+    all_data.screen_main.TC1 = static_cast<int>(input_signals[MPSU_TC1]);
+    all_data.screen_main.TC2 = static_cast<int>(input_signals[MPSU_TC2]);
+    all_data.screen_main.TC3 = static_cast<int>(input_signals[MPSU_TC3]);
+    //all_data.screen_main.I;
+    all_data.screen_main.U = static_cast<double>(input_signals[MPSU_U]);
+    //all_data.screen_main.P;
+    //all_data.screen_main.ltct;
+    //all_data.screen_main.forces;
+    //all_data.screen_main.outputI;
+    //all_data.screen_main.outputU;
+    //all_data.screen_main.numSwitch;
+
+    all_data.screen_main.refForces[0] = input_signals[MPSU_refForces];
+
+
+    //all_data.screen_main.sTrainPos;
+    //all_data.screen_main.reversorDir;
+    //all_data.screen_main.controlVoltage;
+    //all_data.screen_main.sSetpointSpeed;
+
+    all_data.screen_main.motorCompressor1 = input_signals[MPSU_motorCompressor1];
+    all_data.screen_main.motorCompressor2 = input_signals[MPSU_motorCompressor2];
+
+    //all_data.screen_main.scaleSetTraction;
+    //all_data.screen_main.scaleActualTraction;
 
 
     middleBlock_->setAllData(all_data);

@@ -30,5 +30,6 @@ INCLUDEPATH += ../../../viewer/display/include
 
 HEADERS += $$files(./include/*.h)
 SOURCES += $$files(./src/*.cpp)
-RESOURCES += $$files(./resources/*.qrc)
+RESOURCES += $$files(./resources/*.qrc) \
+    resources/images.qrc
 

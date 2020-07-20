@@ -232,7 +232,7 @@ void EP20::stepMPCS(double t, double dt)
 void EP20::stepHighVoltageScheme(double t, double dt)
 {
     int current_kind = 0;
-    double Ukr_in = 0;
+    Ukr_in = 0;
 
     double Uout_ac = 0;
     double Uout_dc = 0;
