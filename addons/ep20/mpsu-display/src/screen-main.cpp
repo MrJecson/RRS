@@ -117,6 +117,9 @@ void ScreenMain::updateScreen(screen_data_t* data)
     // мотор-компрессоры
     labMotorCompressor1_->setPixmap(getMotorCompressorImgName_(smt->motorCompressor1));
     labMotorCompressor2_->setPixmap(getMotorCompressorImgName_(smt->motorCompressor2));
+
+    //
+
 }
 
 

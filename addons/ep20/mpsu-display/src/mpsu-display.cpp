@@ -100,17 +100,32 @@ void MpsuDisplay::slotUpdateTimer()
     all_data.screen_main.pressurePM = static_cast<double>(input_signals[MPSU_PM]);
     all_data.screen_main.pressureTC = static_cast<double>(input_signals[MPSU_TC]);
     all_data.screen_main.pressureVR = static_cast<double>(input_signals[MPSU_VR]);
-    //all_data.screen_main.pressureAST;
+
+
+    //all_data.screen_main.pressureAST = static_cast<double>(input_signals[MPSU_AST]);
+
+
     all_data.screen_main.TC1 = static_cast<int>(input_signals[MPSU_TC1]);
     all_data.screen_main.TC2 = static_cast<int>(input_signals[MPSU_TC2]);
     all_data.screen_main.TC3 = static_cast<int>(input_signals[MPSU_TC3]);
-    //all_data.screen_main.I;
+
+
+    //all_data.screen_main.I = static_cast<double>(input_signals[MPSU_I]);
+
+
     all_data.screen_main.U = static_cast<double>(input_signals[MPSU_U]);
-    //all_data.screen_main.P;
+
+
+    //all_data.screen_main.P = static_cast<double>(input_signals[MPSU_P]);
     //all_data.screen_main.ltct;
-    //all_data.screen_main.forces;
-    //all_data.screen_main.outputI;
-    //all_data.screen_main.outputU;
+
+
+    for (int i = 0; i < 4; ++i)
+    all_data.screen_main.forces[i] = static_cast<qint8>(input_signals[MPSU_forces]);
+
+
+    //all_data.screen_main.outputI = static_cast<double>(input_signals[MPSU_outputI]);
+    //all_data.screen_main.outputU = static_cast<int>(input_signals[MPSU_outputU]);
     //all_data.screen_main.numSwitch;
 
     for (int i = 0; i < 4; ++i)

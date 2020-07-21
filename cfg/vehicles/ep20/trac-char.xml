@@ -1,0 +1,15 @@
+<Config>
+    <Device>
+		
+        <trac_moment_Max>9012</trac_moment_Max>
+		
+		<trac_power_Max>1200</trac_power_Max>
+		
+        <trac_omega_Nominal>135.2</trac_omega_Nominal> 
+		
+		<reducer>4.055</reducer> 
+		
+    </Device>
+</Config>
+
+ 

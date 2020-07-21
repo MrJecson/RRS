@@ -1,0 +1,11 @@
+<Config>
+    <Device>
+		
+        <recup_moment_Max>9012</recup_moment_Max>
+		
+		<recup_power_Max>1200</recup_power_Max>
+		
+        <recup_omega_Nominal>133.7</recup_omega_Nominal> 
+				
+    </Device>
+</Config>

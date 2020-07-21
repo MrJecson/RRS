@@ -1,0 +1,11 @@
+<Config>
+    <Device>
+		
+        <rheo_moment_Max>9012</rheo_moment_Max>
+		
+		<rheo_power_Max>850</rheo_power_Max>
+		
+        <rheo_omega_Nominal>93.4</rheo_omega_Nominal> 
+		
+    </Device>
+</Config>

@@ -209,6 +209,8 @@ MiddleBlock::MiddleBlock(const QString &config_dir, const QString &configFileNam
     sm->motorCompressor1 = MotorCompressorEnum::isolated;
     sm->motorCompressor2 = MotorCompressorEnum::on;
 
+    sm->pressureAST = 0.5;
+
     scrnMain_->updateScreen(sm);
 
 

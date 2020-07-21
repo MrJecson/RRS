@@ -1,4 +1,4 @@
-   #include    "ep20.h"
+    #include    "ep20.h"
 
 #include    <CfgReader.h>
 #include    <QDir>
@@ -40,6 +40,8 @@ void EP20::initialization()
     initBrakeControls(modules_dir);
 
     initKMB2();
+
+    initTractionDrive();
 }
 
 //------------------------------------------------------------------------------
@@ -65,6 +67,21 @@ void EP20::initKMB2()
     kmb2 = new KMB2();
 
     kmb2->read_custom_config(config_dir + QDir::separator() + "kmb2");
+}
+
+//------------------------------------------------------------------------------
+// Инициализация тягового привода
+//------------------------------------------------------------------------------
+void EP20::initTractionDrive()
+{
+    for (size_t i = 0; i < tractionDrive.size(); ++i)
+    {
+        tractionDrive[i] = new TractionDrive();
+
+        tractionDrive[i]->read_custom_config(config_dir + QDir::separator() + "trac-char");
+        tractionDrive[i]->read_custom_config(config_dir + QDir::separator() + "recuperative-characteristics");
+        tractionDrive[i]->read_custom_config(config_dir + QDir::separator() + "rheostat-characteristics");
+    }
 }
 
 //------------------------------------------------------------------------------
@@ -103,8 +120,13 @@ void EP20::initHighVoltageScheme()
         motorCompAC[i] = new ACMotorCompressor();
         motorCompAC[i]->read_custom_config(config_dir + QDir::separator() + "ac-motor-compressor");
     }
+
+
 }
 
+//------------------------------------------------------------------------------
+// Инициализация .....
+//------------------------------------------------------------------------------
 void EP20::initBrakeControls(QString modules_dir)
 {
     krm = loadBrakeCrane(modules_dir + QDir::separator() + "krm130");
@@ -158,7 +180,6 @@ void EP20::initBrakeDevices(double p0, double pTM, double pFL)
 //------------------------------------------------------------------------------
 // Общие шаги моделирования
 //------------------------------------------------------------------------------
-
 void EP20::step(double t, double dt)
 {
     // Вызываем метод
@@ -170,6 +191,8 @@ void EP20::step(double t, double dt)
     stepBrakeControls(t, dt);
 
     stepKMB2(t, dt);
+
+    stepTractionDrive(t, dt);
 
 //     Выводим на экран симулятор, высоту подъема/спуска, выходное напряжение, род ток!
 //    DebugMsg = QString("t: %1 s, U2_4: %2, Q: %3, pUR: %4, pTM: %5, KrM: %6, pTC_2: %7, pTC_1: %8 pZR: %9 pos: %10 trac_pos: %11")
@@ -184,12 +207,12 @@ void EP20::step(double t, double dt)
 //            .arg(spareReservoir->getPressure(), 4, 'f', 2)
 //            .arg(kvt->getHandlePosition(), 4, 'f', 2);
 
-        DebugMsg = QString("t: %1 s, H_AC1 %2, H_DC1 %3, H_AC2 %4, H_DC2 %5")
-                .arg(t, 10, 'f', 2)
-                .arg(pantograph[PANT_AC1]->getHeight(), 4, 'f', 2)
-                .arg(pantograph[PANT_DC1]->getHeight(), 4, 'f', 2)
-                .arg(pantograph[PANT_AC2]->getHeight(), 4, 'f', 2)
-                .arg(pantograph[PANT_DC2]->getHeight(), 4, 'f', 2);
+//        DebugMsg = QString("t: %1 s, H_AC1 %2, H_DC1 %3, H_AC2 %4, H_DC2 %5")
+//                .arg(t, 10, 'f', 2)
+//                .arg(pantograph[PANT_AC1]->getHeight(), 4, 'f', 2)
+//                .arg(pantograph[PANT_DC1]->getHeight(), 4, 'f', 2)
+//                .arg(pantograph[PANT_AC2]->getHeight(), 4, 'f', 2)
+//                .arg(pantograph[PANT_DC2]->getHeight(), 4, 'f', 2);
 
 
 //    DebugMsg = QString("t: %1 s, Reverse_State: %2, Trac_Level: %3, Vel_Level: %4, Reverse_Dir: %5, Trac_Pos: %6, Vel_Pos: %7")
@@ -201,7 +224,7 @@ void EP20::step(double t, double dt)
 //            .arg(kmb2->getTractionPosition(), 2)
 //            .arg(kmb2->getVelocityPosition(), 2);
 
-    stepSignals();
+//    stepSignals();
 
     //________________________________________________
 
@@ -212,6 +235,21 @@ void EP20::step(double t, double dt)
 //     .arg(fastSwitch->getU_out(), 4, 'f', 2)
 //    .arg(tractionTrans->getTractionVoltage(0))
 //    .arg(auxConv[1]->getU2());
+
+
+        DebugMsg = QString("t: %1 s, rev_pos: %2")
+                .arg(t, 10, 'f', 2)
+                .arg(trac_drive_data.reverse_position, 2)
+                .arg(trac_drive_data.traction_force);
+
+        DebugMsg = QString("t: %1 s, Q_a[1]: %2, Q_a[2]: %3, Trac_force: %4")
+                .arg(t, 10, 'f', 2)
+                .arg(Q_a[1], 4, 'f', 2)
+                .arg(Q_a[2], 4, 'f', 2)
+                .arg(trac_drive_data.traction_force);
+
+
+        stepSignals();
 }
 
 //------------------------------------------------------------------------------
@@ -419,6 +457,30 @@ void EP20::stepKMB2(double t, double dt)
 {
     kmb2->setControl(keys);
     kmb2->step(t, dt);
+}
+
+void EP20::stepTractionDrive(double t, double dt)
+{
+    trac_drive_data.reverse_position = kmb2->getReverseState();
+    trac_drive_data.traction_force = kmb2->getTractionLevel();
+
+
+    for (size_t i = 0; i < tractionDrive.size(); ++i)
+    {
+        tractionDrive[i]->setWheelOmega(wheel_omega[2*i]);
+
+        tractionDrive[i]->setTractionDriveData(trac_drive_data);
+        tractionDrive[i]->step(t, dt);
+    }
+
+    Q_a[1] = tractionDrive[0]->getTorque(0);
+    Q_a[2] = tractionDrive[0]->getTorque(1);
+
+    Q_a[3] = tractionDrive[1]->getTorque(0);
+    Q_a[4] = tractionDrive[1]->getTorque(1);
+
+    Q_a[5] = tractionDrive[2]->getTorque(0);
+    Q_a[6] = tractionDrive[2]->getTorque(1);
 }
 
 //------------------------------------------------------------------------------
