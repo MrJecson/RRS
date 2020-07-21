@@ -108,7 +108,7 @@ void MpsuDisplay::slotUpdateTimer()
     all_data.screen_main.U = static_cast<double>(input_signals[MPSU_U]);
     //all_data.screen_main.P;
     //all_data.screen_main.ltct;
-    //all_data.screen_main.forces;
+    all_data.screen_main.forces  ;
     //all_data.screen_main.outputI;
     //all_data.screen_main.outputU;
     //all_data.screen_main.numSwitch;
