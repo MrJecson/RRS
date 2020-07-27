@@ -106,7 +106,19 @@ enum
     MPSU_motorCompressor1 = 225,
     MPSU_motorCompressor2 = 226,
     MPSU_scaleSetTraction = 227,
-    MPSU_scaleActualTraction =228
+    MPSU_scaleActualTraction = 228,
+
+
+    MPSU_CONTROL_MODE = 229,
+    MPSU_DIRECTION_TRAVEL = 230,
+    MPSU_CONTACT_VOLTAGE = 231,
+    MPSU_CURRENT_TYPE = 232,
+    MPSU_CABIN_NUM = 233,
+    MPSU_TRACTION_MODE_INDICATION = 234,
+    MPSU_CURRENT_TAPE = 235,
+
+
+    MPSU_FAN_ANGLE = 236
 };
 
 enum

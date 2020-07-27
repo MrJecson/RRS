@@ -53,7 +53,7 @@ void BrakeReleaseIndicators::setVals(bool TC1, bool TC2, bool TC3)
 //-----------------------------------------------------------------------------
 QString BrakeReleaseIndicators::getStyleSheet_(bool flag)
 {
-    QString color((flag) ? ("green") : ("red"));
+    QString color((flag) ? ("red") : ("green"));
 
     return "border: 1px solid white;"
            "color: " + color + ";"

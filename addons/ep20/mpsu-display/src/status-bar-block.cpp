@@ -94,7 +94,10 @@ void StatusBarBlock::setControlMode(ControlModeEnum controlMode)
         str = "Ручное управление";
         break;
     case ControlModeEnum::automaticControl:
-        str = "Автоматическое управление";
+        str = "Авторегулирование";
+        break;
+    case ControlModeEnum::autoDrive:
+        str = "Автоведение";
         break;
     }
 

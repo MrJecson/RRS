@@ -74,22 +74,75 @@ void EP20::stepSignals()
     analogSignal[MPSU_CURRENT_SPEED] = analogSignal[BLOK_VELOCITY];
     analogSignal[MPSU_CURRENT_SPEED_LIMIT] = analogSignal[BLOK_VELOCITY_CURRENT_LIMIT];
     analogSignal[MPSU_NEXT_SPEED_LIMIT] = analogSignal [BLOK_VELOCITY_NEXT_LIMIT];
+    //Треугольник
+    analogSignal[MPSU_sSeptoinSpeed] = static_cast<float>(kmb2->getVelocityLevel() * 100);
+
 
     analogSignal[MPSU_TM] = analogSignal[BLOK_TM_PRESS];
     analogSignal[MPSU_UR] = analogSignal[BLOK_UR_PRESS];
     analogSignal[MPSU_PM] = static_cast<float>(main_reservoir->getPressure());
     analogSignal[MPSU_TC] = analogSignal[BLOK_TC_PRESS];
     analogSignal[MPSU_VR] = static_cast<float>(spareReservoir->getPressure());
-    //analogSignal[MPSU_AST] = ;
+
+
+    //давление в КТО
+//    analogSignal[MPSU_AST] = 1;
+
+
     analogSignal[MPSU_TC1] = static_cast<float>(brake_mech[FWD_TROLLEY]->getBrakeCylinderPressure());
     analogSignal[MPSU_TC2] = static_cast<float>(brake_mech[MDL_TROLLEY]->getBrakeCylinderPressure());
     analogSignal[MPSU_TC3] = static_cast<float>(brake_mech[BWD_TROLLEY]->getBrakeCylinderPressure());
-    //analogSignal[MPSU_I];
-    analogSignal[MPSU_U] = static_cast<float>(Ukr_in / 1000.0);
+
+
+    //???  пренадлежит индикации состояния ЭПТ(кружочкам)
+//    analogSignal[MPSU_I];
+
+    //??? возможно пренадлежит индикации состояния ЭПТ(кружочкам)
+    //analogSignal[MPSU_U] = ;
+
+
+    //??? уровень давления в АСТ
     //analogSignal[MPSU_P];
-    //analogSignal[MPSU_ltct] = ;
 
 
+    //нагрузка ТПр
+//    double pant_U;
+//    for (auto td = pantograph.begin(); td != pantograph.end(); ++td)
+//    {
+//        pant_U = (*td)->getUout();
+//    }
+
+//    analogSignal[MPSU_ltct] = pant_U;
+
+
+    // I и U в состоянии ЭПТ
+    analogSignal[MPSU_outputI] = 0.2;
+    analogSignal[MPSU_outputU] = 3;
+
+
+       // Сигнал СОПТ!
+//    analogSignal[MPSU_numSwitch] =
+
+
+    //Пробег электровоза
+    analogSignal[MPSU_sTrinPos] = analogSignal[BLOK_RAILWAY_COORD];
+
+
+    //Направление (задано константой, никак не обрабатывается)
+//    analogSignal[MPSU_reversorDir] = ;
+
+    // Напряжение U цу (индикация напряжения в цепи управления и АБ;)
+    analogSignal[MPSU_controlVoltage] = 2;
+
+
+
+    //индикатор состояния мотор-компрессора
+    analogSignal[MPSU_motorCompressor1] = mpcsOutput.toggleSwitchMK[0] ? 1 : 2;
+    analogSignal[MPSU_motorCompressor2] = mpcsOutput.toggleSwitchMK[1] ? 1 : 2;
+
+
+    // Уровни тяги!
+    //Фактическая
     double trac_force = 0.0;
     double max_force = 0.0;
     for (auto td = tractionDrive.begin(); td != tractionDrive.end(); ++td)
@@ -98,23 +151,41 @@ void EP20::stepSignals()
         max_force += 4.0 * (*td)->getMotorMaxTorque() / wheel_diameter;
     }
 
-    analogSignal[MPSU_forces] = static_cast<float>(trac_force * 100.0 / max_force);
+    analogSignal[MPSU_scaleSetTraction] = static_cast<float>(trac_force * 100.0 / max_force);
 
 
+    //заданная
+    analogSignal[MPSU_scaleActualTraction] = static_cast<float>(kmb2->getTractionLevel() * 100);
 
-    //analogSignal[MPSU_outputI];
-    //analogSignal[MPSU_outputU];
-    //analogSignal[MPSU_numSwitch];
+    //режим управления
+    analogSignal[MPSU_CONTROL_MODE] = mpcsOutput.control_mode;
 
 
-    analogSignal[MPSU_refForces] = static_cast<float>(kmb2->getTractionLevel() * 100);
+    //напряжение контактной сети
+    analogSignal[MPSU_CONTACT_VOLTAGE] = static_cast<float>(Ukr_in / 1000.0);
 
-    //analogSignal[MPSU_sTrinPos];
-    //analogSignal[MPSU_reversorDir];
-    //analogSignal[MPSU_controlVoltage];
-    //analogSignal[MPSU_sSeptoinSpeed];
-    analogSignal[MPSU_motorCompressor1] = mpcsOutput.toggleSwitchMK[0] ? 1 : 2;
-    analogSignal[MPSU_motorCompressor2] = mpcsOutput.toggleSwitchMK[1] ? 1 : 2;
-    //analogSignal[MPSU_scaleSetTraction];
-    //analogSignal[MPSU_scaleActualTraction];
+    //род тока
+    analogSignal[MPSU_CURRENT_TYPE];
+
+    //направление движения
+    int rev_dir;
+    if (kmb2->getReverseState() < 0)
+    {
+        rev_dir = 1;
+    }
+
+    if (kmb2->getReverseState() > 0)
+    {
+        rev_dir = 0;
+    }
+
+    analogSignal[MPSU_DIRECTION_TRAVEL] = rev_dir;
+
+    //Вентилятор
+    analogSignal[MPSU_FAN_ANGLE] =0;
+
+
+    //???
+    //    analogSignal[MPSU_forces] = static_cast<float>(trac_force * 100.0 / max_force);
+    //    analogSignal[MPSU_refForces] = static_cast<float>(kmb2->getTractionLevel() * 100);
 }

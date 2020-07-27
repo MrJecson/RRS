@@ -67,7 +67,8 @@ enum DirectionTravelEnum
 enum ControlModeEnum
 {
     manualControl,
-    automaticControl
+    automaticControl,
+    autoDrive
 };
 
 /*!
@@ -116,7 +117,7 @@ enum CurrentTypeEnum
  */
 struct status_bar_data_t
 {
-    CabinNumEnum cabinNum;                              // номер активной кабины
+    CabinNumEnum cabinNum;                             // номер активной кабины
     DirectionTravelEnum directionTravel;                // направление движения
     ControlModeEnum controlMode;                        // режим управления
     TractionModeIndicationEnum tractionModeIndication;  // индикация задания режима тяги или ЭТ
