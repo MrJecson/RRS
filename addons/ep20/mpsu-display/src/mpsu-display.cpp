@@ -6,6 +6,8 @@
 #include    <QVBoxLayout>
 #include "display-shared-structures.h"
 
+
+
 MpsuDisplay::MpsuDisplay(QWidget *parent, Qt::WindowFlags f)
     : AbstractDisplay(parent, f),
       MIDDLE_BLOCK_GEO(QPoint(0, 0), QSize(800, 588))//,
@@ -95,6 +97,12 @@ void MpsuDisplay::slotUpdateTimer()
     all_data.screen_main.sCurSpeed = static_cast<double>(input_signals[MPSU_CURRENT_SPEED]);
     all_data.screen_main.sCurSpeedLimit = static_cast<int>(input_signals[MPSU_CURRENT_SPEED_LIMIT]);
     all_data.screen_main.sNextSpeedLimit = static_cast<int>(input_signals[MPSU_NEXT_SPEED_LIMIT]);
+
+
+    //Пробег электровоза
+   all_data.screen_main.sTrainPos = static_cast<double>(input_signals[MPSU_sTrinPos]);
+
+
     //Треугольник
     all_data.screen_main.sSetpointSpeed = input_signals[MPSU_sSeptoinSpeed];
 
@@ -107,9 +115,9 @@ void MpsuDisplay::slotUpdateTimer()
 
 
       //давление в КТО
-    all_data.screen_main.pressureAST = static_cast<double>(input_signals[MPSU_AST]);
+//    all_data.screen_main.pressureAST = static_cast<double>(input_signals[MPSU_AST]);
 
-
+    //Сигнализаторы неотпуска в тормозных цилиндрах
     all_data.screen_main.TC1 = static_cast<int>(input_signals[MPSU_TC1] * 100);
     all_data.screen_main.TC2 = static_cast<int>(input_signals[MPSU_TC2] * 100);
     all_data.screen_main.TC3 = static_cast<int>(input_signals[MPSU_TC3] * 100);
@@ -118,13 +126,14 @@ void MpsuDisplay::slotUpdateTimer()
     //???
 //    all_data.screen_main.I = static_cast<double>(input_signals[MPSU_I]);
 
-
     //????
    // all_data.screen_main.U = static_cast<double>(input_signals[MPSU_U]);
 
 
+
     //напряжение контактной сети
     all_data.status_bar.contactVoltage = static_cast<double>(input_signals[MPSU_CONTACT_VOLTAGE]);
+
 
     //род тока
     all_data.status_bar.currentType = static_cast<CurrentTypeEnum>(input_signals[MPSU_CURRENT_TYPE]);
@@ -135,16 +144,16 @@ void MpsuDisplay::slotUpdateTimer()
 
 
     //нагрузка ТПр
-    for (int i = 0; i < 2; ++i)
-    {
-    all_data.screen_main.ltct.pantograph[i].num = PantographNumEnum::forward;
-    all_data.screen_main.ltct.pantograph[i].ready = static_cast<bool>(input_signals[MPSU_ltct]);
-    all_data.screen_main.ltct.pantograph[i].active = static_cast<bool>(input_signals[MPSU_ltct]);
+//    for (int i = 0; i < 2; ++i)
+//    {
+//    all_data.screen_main.ltct.pantograph[i].num = PantographNumEnum::forward;
+//    all_data.screen_main.ltct.pantograph[i].ready = static_cast<bool>(input_signals[MPSU_ltct]);
+//    all_data.screen_main.ltct.pantograph[i].active = static_cast<bool>(input_signals[MPSU_ltct]);
 
-    all_data.screen_main.ltct.pantograph[i].num = PantographNumEnum::backward;
-    all_data.screen_main.ltct.pantograph[i].ready = static_cast<bool>(input_signals[MPSU_ltct]);
-    all_data.screen_main.ltct.pantograph[i].active = static_cast<bool>(input_signals[MPSU_ltct]);
-}
+//    all_data.screen_main.ltct.pantograph[i].num = PantographNumEnum::backward;
+//    all_data.screen_main.ltct.pantograph[i].ready = static_cast<bool>(input_signals[MPSU_ltct]);
+//    all_data.screen_main.ltct.pantograph[i].active = static_cast<bool>(input_signals[MPSU_ltct]);
+//}
 
 
     // I и U в состоянии ЭПТ
@@ -153,12 +162,7 @@ void MpsuDisplay::slotUpdateTimer()
 
 
         // Сигнал СОПТ!
-//    all_data.screen_main.numSwitch = static_cast<NumIndicatorSwitchPosEnum>(input_signals[MPSU_numSwitch]);
-
-
-
-    //Пробег электровоза
-   all_data.screen_main.sTrainPos = static_cast<double>(input_signals[MPSU_sTrinPos]);
+    all_data.screen_main.numSwitch = static_cast<NumIndicatorSwitchPosEnum>(input_signals[MPSU_numSwitch]);
 
 
    //????
@@ -186,7 +190,14 @@ void MpsuDisplay::slotUpdateTimer()
 
 
     //Вентилятор
-    all_data.status_bar_bottom.fanAngle = input_signals[MPSU_FAN_ANGLE];
+    all_data.status_bar_bottom.fanAngle = static_cast<int>(input_signals[MPSU_FAN_ANGLE]);
+
+
+
+
+
+
+
 
     //???
     //    for (int i = 0; i < 4; ++i)

@@ -99,9 +99,9 @@ enum TypeBrakeEnum
  */
 enum CurrentTypeEnum
 {
-    AC,             // переменный ток
-    DC,             // постоянный ток
-    notDetermined   // не определен
+    notDetermined,   // не определен
+    AC,              // переменный ток
+    DC               // постоянный ток
 };
 
 
@@ -165,7 +165,7 @@ struct status_bar_bottom_data_t
         , AST(false)
         , TC(false)
     {
-        strcpy(curModelData, "00:00:00");
+        strcpy(curModelData, "00.00.00");
         strcpy(curModelTime, "00:00:00");
     }
 

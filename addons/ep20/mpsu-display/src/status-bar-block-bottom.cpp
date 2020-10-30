@@ -27,6 +27,8 @@ StatusBarBlockBottom::StatusBarBlockBottom(QColor backrg, QRect geo, QWidget *pa
     this->setPalette(QPalette(backrg));
 
     this->createAllChildren_();
+
+
 }
 
 
@@ -51,7 +53,9 @@ void StatusBarBlockBottom::updateData(status_bar_bottom_data_t *data)
     labCurData_->setText(data->curModelData);
     // Текущее время
     labCurTime_->setText(data->curModelTime);
+
 }
+
 
 
 

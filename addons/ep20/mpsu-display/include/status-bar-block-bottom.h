@@ -1,4 +1,4 @@
-//-----------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------
 //
 //      Статусная строка кадра
 //      (c) РГУПС, ВЖД 6/09/2019
@@ -16,6 +16,7 @@
 #ifndef STATUSBARBLOCKBOTTOM_H
 #define STATUSBARBLOCKBOTTOM_H
 
+#include <QTimer>
 
 #include "abstract-block.h"
 #include "display-shared-structures.h"
@@ -39,7 +40,13 @@ public slots:
     void updateData(status_bar_bottom_data_t* data);
 
 
+
+
 private:
+
+    QTimer  *activeIntervalTimer_;
+
+
     // Переопределенный чистый виртуальный метод
     /// Метод создания дочерних виджетов
     void createAllChildren_() Q_DECL_OVERRIDE;

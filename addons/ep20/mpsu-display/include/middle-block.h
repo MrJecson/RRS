@@ -20,6 +20,7 @@
 #include <QMap>
 
 #include <QWidget>
+
 #include "a-consts.h"
 #include "structures-display.h" // FIXME
 
@@ -99,7 +100,6 @@ private:
 
     //
     StatusBarBlockBottom* statusBarBlockBottom_;
-
 
     // ! *** *** *** *** *** Объявление всех экранов *** *** *** *** *** ! //
     QList<AbstractScreen*>  listScreens_;       ///< Список всех экранов

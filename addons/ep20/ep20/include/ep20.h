@@ -188,7 +188,7 @@ private:
 
     void load_brakes_config(QString path);
 
-    void stepSignals();
+    void stepSignals(double t, double dt);
 };
 
 #endif // EP20_H

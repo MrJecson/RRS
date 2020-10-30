@@ -118,7 +118,11 @@ enum
     MPSU_CURRENT_TAPE = 235,
 
 
-    MPSU_FAN_ANGLE = 236
+    MPSU_FAN_ANGLE = 236,
+//    MPSU_AST = 237,
+//    MPSU_TC = 238,
+
+
 };
 
 enum

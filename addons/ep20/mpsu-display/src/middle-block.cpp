@@ -336,11 +336,15 @@ MiddleBlock::MiddleBlock(const QString &config_dir, const QString &configFileNam
 
 
     status_bar_bottom_data_t* sbbd = &all_data.status_bar_bottom;
-    sbbd->fanAngle = 0;
+
+
+    sbbd->fanAngle;
+
     sbbd->AST = true;
     sbbd->TC = false;
     strcpy(sbbd->curModelData, "01.02.03");
-    strcpy(sbbd->curModelTime, "04.05.06");
+    strcpy(sbbd->curModelTime, "04:05:06");
+
 
     statusBarBlockBottom_->updateData(sbbd);
     // --- удалить!! -----
@@ -392,6 +396,8 @@ void MiddleBlock::setAllData(display_data_t &all_data)
 
     scrnMain_->updateScreen(&all_data.screen_main);
 
+    statusBarBlockBottom_->updateData(&all_data.status_bar_bottom);
+
     scrnDiagnostics_->updateScreen(&all_data.screen_diagnostics);
 
     scrnPowerCircuit_->updateScreen(&all_data.screen_power_circuit);
@@ -422,6 +428,8 @@ void MiddleBlock::receiveAllData(QByteArray allArr)
     // -------------------------------------------------------
 
     scrnMain_->updateScreen(&all_data.screen_main);
+
+    statusBarBlockBottom_->updateData(&all_data.status_bar_bottom);
 
     scrnDiagnostics_->updateScreen(&all_data.screen_diagnostics);
 
