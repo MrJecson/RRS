@@ -7,7 +7,15 @@ TractionDrive::TractionDrive(QObject *parent)
     : trac_moment_Max(0),
       trac_power_Max(0),
       trac_omega_Nominal(0),
-      reducer_coeff(0)
+      reducer_coeff(0),
+      recup_moment_Max(0),
+      recup_power_Max(0),
+      recup_omega_Nominal(0),
+      wheel_omega(0),
+      m_trac_ref(0),
+      K_i(1),
+      T_i(2),
+      volt_trac_conv(0)
 {
     std::fill(torque.begin(), torque.end(), 0);
 }
@@ -33,6 +41,13 @@ void TractionDrive::setTractionDriveData(const traction_drive_t &trac_drive)
     this->trac_drive = trac_drive;
 }
 
+
+double TractionDrive::setVoltTracConv(double volt)
+{
+    this->volt_trac_conv = volt;
+}
+
+
 //------------------------------------------------------------------------------
 // Получить крутящий момент
 //------------------------------------------------------------------------------
@@ -49,13 +64,18 @@ double TractionDrive::getTorque(size_t i)
 //------------------------------------------------------------------------------
 void TractionDrive::preStep(state_vector_t &Y, double t)
 {
-    double M_trac_ref = pf(trac_drive.traction_force) * getTracTorqueLimit(wheel_omega * reducer_coeff);
 
-    double M_edt_ref = 0;
+    if (volt_trac_conv != 0)
+    {
 
-    //double F_brakes_ref = hs_p(trac_drive.traction_force) * getBrakingForceLimit(wheel_omega * reducer_coeff);
+        m_trac_ref = pf(trac_drive.traction_force) * getTracTorqueLimit(wheel_omega * reducer_coeff);
 
-    torque[0] = torque[1] = M_trac_ref * reducer_coeff;
+        double M_edt_ref = 0;
+
+//    double F_brakes_ref = hs_p(trac_drive.traction_force) * getBrakingForceLimit(wheel_omega * reducer_coeff);
+
+        torque[0] = torque[1] = m_trac_ref * reducer_coeff;
+    }
 }
 
 //------------------------------------------------------------------------------
@@ -63,7 +83,7 @@ void TractionDrive::preStep(state_vector_t &Y, double t)
 //------------------------------------------------------------------------------
 void TractionDrive::ode_system(const state_vector_t &Y, state_vector_t &dYdt, double t)
 {
-
+    dYdt[0] = (K_i * m_trac_ref - Y[0])/T_i;
 }
 
 //------------------------------------------------------------------------------

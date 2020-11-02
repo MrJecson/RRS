@@ -22,8 +22,12 @@ public:
     /// Установить данные для тягового привода
     void setTractionDriveData(const traction_drive_t &trac_drive);
 
+    /// Установить напряжение с Тягового Преобразователя
+    double setVoltTracConv(double volt);
+
     /// Получить крутящий момент
     double getTorque(size_t i);
+
 
 private:
 
@@ -52,6 +56,18 @@ private:
     /// Массив крутящих моментов
     std::array<double, 2> torque;
 
+    /// Момент тяги (Относительный)
+    double m_trac_ref;
+
+    ///
+    int K_i;
+
+    ///
+    double T_i;
+
+    ///
+    double volt_trac_conv;
+
     /// Предварительный шаг
     void preStep(state_vector_t &Y, double t);
 
@@ -66,6 +82,7 @@ private:
 
     /// Вычисление максимального тормозного усилия
     double getBrakingForceLimit(double omega_recup);
+
 };
 
 #endif // TRACTIONDRIVE_H

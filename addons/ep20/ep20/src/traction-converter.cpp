@@ -49,6 +49,16 @@ double TractionConverter::getU4(size_t i)
         return 0;
 }
 
+double TractionConverter::getVoltState() const
+{
+    if (Udc_in != 0)
+        return voltage == true;
+    else
+        return voltage == false;
+}
+
+
+
 //------------------------------------------------------------------------------
 // Предварительные шаги
 //------------------------------------------------------------------------------
@@ -59,8 +69,10 @@ void TractionConverter::preStep(state_vector_t &Y, double t)
     {
         U4QS[i] = K4QS * Ut[i];
         Udc[i] = max(U4QS[i], Udc_in);
-        U4[i] = Udc[i];
+        U4[i] = Udc[i];   
     }
+
+
 }
 
 //------------------------------------------------------------------------------

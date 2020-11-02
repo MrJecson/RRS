@@ -24,6 +24,8 @@ public:
     /// Получить напряжение на преобразователь собственных нужд
     double getU4(size_t i);
 
+    double getVoltState() const;
+
 private:
 
     /// Напряжение с тяговых обмоток
@@ -43,6 +45,8 @@ private:
 
     /// Напряжение преобразователя собственных нужд
     std::array<double, 2> U4;
+
+    bool voltage;
 
     /// Предварительный шаг
     void preStep(state_vector_t &Y, double t);
