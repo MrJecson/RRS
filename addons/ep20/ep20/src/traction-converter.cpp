@@ -5,11 +5,11 @@
 //------------------------------------------------------------------------------
 TractionConverter::TractionConverter(QObject *parent) : Device (parent)
   ,Udc_in(0)
+  ,Udc(0)
   ,K4QS(1.808)
 {
     std::fill(Ut.begin(), Ut.end(), 0);
     std::fill(U4QS.begin(), U4QS.end(), 0);
-    std::fill(Udc.begin(), Udc.end(), 0);
     std::fill(U4.begin(), U4.end(), 0);
 }
 
@@ -51,28 +51,20 @@ double TractionConverter::getU4(size_t i)
 
 double TractionConverter::getVoltState() const
 {
-    if (Udc_in != 0)
-        return voltage == true;
-    else
-        return voltage == false;
+    return Udc;
 }
-
-
 
 //------------------------------------------------------------------------------
 // Предварительные шаги
 //------------------------------------------------------------------------------
 void TractionConverter::preStep(state_vector_t &Y, double t)
 {
-
     for (size_t i = 0; i < U4QS.size(); ++i)
     {
         U4QS[i] = K4QS * Ut[i];
-        Udc[i] = max(U4QS[i], Udc_in);
-        U4[i] = Udc[i];   
+        Udc = max(U4QS[i], Udc_in);
+        U4[i] = Udc;
     }
-
-
 }
 
 //------------------------------------------------------------------------------

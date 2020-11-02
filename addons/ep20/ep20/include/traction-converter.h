@@ -28,25 +28,23 @@ public:
 
 private:
 
-    /// Напряжение с тяговых обмоток
-    std::array<double, 2> Ut;
-
     /// Напряжение постоянного тока
     double Udc_in;
 
-    /// Напряжение с выхода 4QS-преобразователя
-    std::array<double, 2> U4QS;
+    /// Напряжение звена постоянного тока
+    double Udc;
 
     /// Коэффициент 4QS-преобразователя
     double K4QS;
 
-    /// Напряжение звена постоянного тока
-    std::array<double, 2> Udc;
+    /// Напряжение с тяговых обмоток
+    std::array<double, 2> Ut;
+
+    /// Напряжение с выхода 4QS-преобразователя
+    std::array<double, 2> U4QS;
 
     /// Напряжение преобразователя собственных нужд
     std::array<double, 2> U4;
-
-    bool voltage;
 
     /// Предварительный шаг
     void preStep(state_vector_t &Y, double t);

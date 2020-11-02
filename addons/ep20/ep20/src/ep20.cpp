@@ -242,11 +242,12 @@ void EP20::step(double t, double dt)
 //                .arg(trac_drive_data.reverse_position, 2)
 //                .arg(trac_drive_data.traction_force);
 
-        DebugMsg = QString("t: %1 s, Q_a[1]: %2, Q_a[2]: %3, Trac_force: %4")
+        DebugMsg = QString("t: %1 s, Q_a[1]: %2, Q_a[2]: %3, Trac_force: %4, Udc: %5")
                 .arg(t, 10, 'f', 2)
                 .arg(Q_a[1], 4, 'f', 2)
                 .arg(Q_a[2], 4, 'f', 2)
-                .arg(trac_drive_data.traction_force, 5, 'f', 2);
+                .arg(trac_drive_data.traction_force, 5, 'f', 2)
+                .arg(trac_conv[0]->getVoltState());
 
         stepSignals();
 }
@@ -463,15 +464,12 @@ void EP20::stepTractionDrive(double t, double dt)
     trac_drive_data.reverse_position = kmb2->getReverseState();
     trac_drive_data.traction_force = kmb2->getTractionLevel();
 
-
     for (size_t i = 0; i < tractionDrive.size(); ++i)
     {
         tractionDrive[i]->setWheelOmega(wheel_omega[2*i]);
-
         tractionDrive[i]->setTractionDriveData(trac_drive_data);
-        tractionDrive[i]->step(t, dt);
-
         tractionDrive[i]->setVoltTracConv(trac_conv[i]->getVoltState());
+        tractionDrive[i]->step(t, dt);
     }
 
     Q_a[1] = tractionDrive[0]->getTorque(0);

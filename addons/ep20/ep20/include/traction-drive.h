@@ -28,7 +28,6 @@ public:
     /// Получить крутящий момент
     double getTorque(size_t i);
 
-
 private:
 
     /// Входные данные тягового привода
@@ -59,14 +58,20 @@ private:
     /// Момент тяги (Относительный)
     double m_trac_ref;
 
-    ///
+    /// Коэфф
     int K_i;
 
-    ///
+    /// Период
     double T_i;
 
-    ///
+    /// Напряжение с Тягового Преобразователя
     double volt_trac_conv;
+
+    double U_nom;
+
+    double plug;
+
+    double variable_x;
 
     /// Предварительный шаг
     void preStep(state_vector_t &Y, double t);
@@ -82,7 +87,6 @@ private:
 
     /// Вычисление максимального тормозного усилия
     double getBrakingForceLimit(double omega_recup);
-
 };
 
 #endif // TRACTIONDRIVE_H
