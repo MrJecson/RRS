@@ -8,7 +8,6 @@ TractionDrive::TractionDrive(QObject *parent)
       trac_power_Max(0),
       trac_omega_Nominal(0),
       reducer_coeff(0),
-<<<<<<< HEAD
       recup_moment_Max(0),
       recup_power_Max(0),
       recup_omega_Nominal(0),
@@ -19,10 +18,8 @@ TractionDrive::TractionDrive(QObject *parent)
       volt_trac_conv(0),
       U_nom(2200.0),
       plug(0),
-      variable_x(0)
-=======
+      variable_x(0),
       motor_max_torque(116.7e3)
->>>>>>> a02b5f3f9809347ab9e94265f2ccdf61b3b5dd9a
 {
     std::fill(torque.begin(), torque.end(), 0);
 }
