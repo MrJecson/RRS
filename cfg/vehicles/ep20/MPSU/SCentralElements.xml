@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Config>
+	<SCentralElements>
+
+		<!-- размер шрифта значений -->
+		<textFont>20</textFont>
+
+		<!-- цвет значения текущей скорости -->
+		<curSpeed_textColor>#000000</curSpeed_textColor>
+
+		<!-- цвет значения ограничения скорости -->
+		<limitSpeed_textColor>#ff0000</limitSpeed_textColor>
+		<!-- смещение текста по оси OY -->
+		<limitSpeed_textMargin>75</limitSpeed_textMargin>
+		
+	</SCentralElements>
+	
+</Config>

@@ -133,6 +133,8 @@ struct mpcs_output_t
     /// Состояние подсветки сенсорных клавиш
     lamps_state_t lamps_state;
 
+    int control_mode;
+
     /// Состояние ТП
     std::array<bool, NUM_PANTOGRAPHS> pant_state;
 
@@ -141,6 +143,7 @@ struct mpcs_output_t
         , turn_on_fs(false)
         , MKstate(0.0)
         , control_switch(0.0f)
+        , control_mode(1)
     {
         std::fill(pant_state.begin(), pant_state.end(), false);
         std::fill(toggleSwitchMK.begin(), toggleSwitchMK.end(), false);

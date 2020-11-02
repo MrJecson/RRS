@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Config>
+	<!-- Основные линии на шкале спидометра -->
+	<SMajorLines>
+
+		<!-- цвет -->
+		<lines_color>#ffffff</lines_color>
+		<!-- ширина -->
+		<lines_width>3</lines_width>
+		<!-- длина -->
+		<lines_length>20</lines_length>
+		
+	</SMajorLines>
+	
+</Config>

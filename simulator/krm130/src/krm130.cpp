@@ -77,6 +77,8 @@ void BrakeCrane130::setPosition(int &position)
 
     std::fill(pos.begin(), pos.end(), 0.0);
     pos[static_cast<size_t>(position)] = 1.0;
+
+
 }
 
 //------------------------------------------------------------------------------

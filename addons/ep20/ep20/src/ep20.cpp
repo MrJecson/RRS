@@ -10,8 +10,8 @@
 //------------------------------------------------------------------------------
 EP20::EP20()
 {
-    Uks = 25000.0;
-    current_kind = 1;
+    Uks = 3000.0;
+    current_kind = 2;
 }
 
 //------------------------------------------------------------------------------
@@ -249,7 +249,7 @@ void EP20::step(double t, double dt)
                 .arg(trac_drive_data.traction_force, 5, 'f', 2)
                 .arg(trac_conv[0]->getVoltState());
 
-        stepSignals();
+        stepSignals(t, dt);
 }
 
 //------------------------------------------------------------------------------
@@ -270,7 +270,7 @@ void EP20::stepMPCS(double t, double dt)
 void EP20::stepHighVoltageScheme(double t, double dt)
 {
     int current_kind = 0;
-    double Ukr_in = 0;
+    Ukr_in = 0;
 
     double Uout_ac = 0;
     double Uout_dc = 0;

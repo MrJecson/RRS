@@ -578,9 +578,14 @@ void Model::sharedMemoryFeedback()
                   (*it)->getDiscreteSignals().end(),
                   viewer_data.te[i].discreteSignal.begin());*/
 
-        std::copy((*it)->getAnalogSignals().begin(),
+        /*std::copy((*it)->getAnalogSignals().begin(),
                   (*it)->getAnalogSignals().end(),
-                  viewer_data.te[i].analogSignal.begin());
+                  viewer_data.te[i].analogSignal.begin());*/
+
+        viewer_data.te[i].analogSignal = (*it)->getAnalogSignals();
+
+        float krm_pos1 = viewer_data.te[i].analogSignal[1];
+        float krm_pos2 = (*it)->getAnalogSignal(1);
 
         ++i;
     }

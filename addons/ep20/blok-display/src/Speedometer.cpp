@@ -301,6 +301,7 @@ bool Speedometer::loadSpeedometerCfg(QString cfg_path)
     CfgReader cfg;
 
     if (cfg.load(cfg_path))
+
     {
         QString sectionName = "Speedometer";
 

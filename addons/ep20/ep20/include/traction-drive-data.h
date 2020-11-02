@@ -22,6 +22,13 @@ struct traction_drive_t {
 
     /// Сила тяги
     double traction_force;
+
+    traction_drive_t()
+        : reverse_position(0)
+        , traction_force(0.0)
+    {
+
+    }
 };
 
 #endif // TRACTIONDRIVEDATA_H

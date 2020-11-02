@@ -8,6 +8,7 @@ TractionDrive::TractionDrive(QObject *parent)
       trac_power_Max(0),
       trac_omega_Nominal(0),
       reducer_coeff(0),
+<<<<<<< HEAD
       recup_moment_Max(0),
       recup_power_Max(0),
       recup_omega_Nominal(0),
@@ -19,6 +20,9 @@ TractionDrive::TractionDrive(QObject *parent)
       U_nom(2200.0),
       plug(0),
       variable_x(0)
+=======
+      motor_max_torque(116.7e3)
+>>>>>>> a02b5f3f9809347ab9e94265f2ccdf61b3b5dd9a
 {
     std::fill(torque.begin(), torque.end(), 0);
 }
@@ -65,7 +69,6 @@ double TractionDrive::getTorque(size_t i)
 //------------------------------------------------------------------------------
 void TractionDrive::preStep(state_vector_t &Y, double t)
 {
-
     if (volt_trac_conv > U_nom)
     {
         plug = 1;
@@ -73,13 +76,17 @@ void TractionDrive::preStep(state_vector_t &Y, double t)
 //        double M_edt_ref = 0;
 //        double F_brakes_ref = hs_p(trac_drive.traction_force) * getBrakingForceLimit(wheel_omega * reducer_coeff);
 
+//        motor_max_torque = getTracTorqueLimit(wheel_omega * reducer_coeff);
+
+        double M_edt_ref = 0;
+
         m_trac_ref = pf(trac_drive.traction_force) * getTracTorqueLimit(wheel_omega * reducer_coeff);
 
         variable_x = m_trac_ref * plug;
 
         torque[0] = torque[1] = Y[0] * reducer_coeff;
     }
-
+    //    torque[0] = torque[1] = M_trac_ref * reducer_coeff;
 }
 
 //------------------------------------------------------------------------------

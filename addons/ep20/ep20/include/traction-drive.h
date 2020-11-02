@@ -28,6 +28,8 @@ public:
     /// Получить крутящий момент
     double getTorque(size_t i);
 
+    double getMotorMaxTorque() const { return motor_max_torque; }
+
 private:
 
     /// Входные данные тягового привода
@@ -42,6 +44,8 @@ private:
     /// Редуктор (тяговая характеристика)
     double  reducer_coeff;
 
+    double motor_max_torque;
+
     /// Момент максимальный (рекуперативная характеристика)
     double recup_moment_Max;
     /// Мощность максимальная (рекуперативная характеристика)
@@ -51,6 +55,7 @@ private:
 
     /// Угловая скорость
     double wheel_omega;
+
 
     /// Массив крутящих моментов
     std::array<double, 2> torque;

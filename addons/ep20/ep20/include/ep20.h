@@ -121,6 +121,8 @@ private:
     /// Электро-воздухораспределитель (ЭВР)
     ElectroAirDistributor   *electroAirDistr;
 
+    double Ukr_in;
+
     enum
     {
         NUM_TROLLEYS = 3,
@@ -186,7 +188,7 @@ private:
 
     void load_brakes_config(QString path);
 
-    void stepSignals();
+    void stepSignals(double t, double dt);
 };
 
 #endif // EP20_H
